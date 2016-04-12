@@ -1,0 +1,23 @@
+{{#include t="include/base.html" title="Web Dashboard" }}
+    <div class="container">
+        
+        <div class="row">
+            <div class="column">
+                {{import t="components/match_selector.html"}}
+            </div>
+            <div class="column">
+                {{import t="components/readout.html"}}
+            </div>
+        </div>
+        
+        <div class="row">
+            {{import t="components/defense_selector.html"}}
+        </div>
+        
+        <br>
+        <div class="row">
+            {{import t="components/logger.html"}}
+        </div>
+        
+    </div>
+{{/include}}

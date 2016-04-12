@@ -1,0 +1,115 @@
+// The build.gradle for our 2016 Multiproject Championship Build. This keeps everything organised.
+// @author Jaci
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+        name = "Jaci"
+        url = "http://dev.imjac.in/maven"
+    }
+  }
+  dependencies {
+    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '4.4.3', classifier: 'Toast' // WAS: 4.3.3
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-4589'
+  }
+}
+
+plugins {
+    id 'idea'
+    id 'eclipse'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'kotlin'
+    apply plugin: 'GradleRIO'
+    
+    configurations {
+        ideProvider
+        buildLibs
+    }
+    
+    // This makes sure everything can link back to the root module for IDE module dependencies, so code changes are updated
+    // live and not in between runs. Currently this is only implemented for IntelliJ
+    idea.module {
+        scopes.PROVIDED.plus += [configurations.ideProvider]
+    }
+    
+    repositories {
+        maven {
+            name = "Jaci"
+            url = "http://dev.imjac.in/maven"
+        }
+    }
+    
+    // Toast is kind of important, don't you think?
+    dependencies {
+        compile group: 'jaci.openrio.toast', name: 'Toast', version: '2.4.8'
+    }
+    
+    // The buildLibs configuration makes it easy to include libraries in the final .jar for any project.
+    // In our case, we compile the Spark-Java plugin with the WebUI, assembled into one jar.
+    jar.doFirst {
+        from configurations.buildLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    // Formalities.
+    gradlerio.team = "5333"
+    gradlerio.deployFile = "toast/modules/${archivesBaseName}.jar"
+}
+
+subprojects {
+    // These link back to the root project to make sure everything depends on the root project.
+    dependencies {
+        compile         project(path: ':', configuration: 'runtime')
+        ideProvider     project(path: ':', configuration: 'compile')
+    }
+}
+
+dependencies {
+    // runtime allows me to put all these in one simulation run config without code hinting
+    // or compilation errors. This just adds them to the Runtime classpath for when they are run in the IDE.
+    // It's really quite nifty
+    runtime  project(path: ':5333-Stats', configuration: 'compile')
+    runtime  project(path: ':5333-WebUI', configuration: 'compile')
+    runtime  project(path: ':5333-Autonomous', configuration: 'compile')
+    
+    // The main and WebUI modules have some sources written in Kotlin. 
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4589'
+    buildLibs 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4589'
+}
+
+// The stats module is used to record match data over time thanks to the BlackBox module. This lets us view
+// a graph of our performance in retrospect. It's quite neato. Who knows, we might release it someday.
+project(":5333-Stats") {
+    archivesBaseName = "5333-Stats"
+    
+    // Stat Dependencies (BlackBox). Assemble it since it's a dependency anyway
+    dependencies {
+        compile group: 'jaci.openrio.modules', name: 'BlackBox', version: '0.1.1'
+        buildLibs group: 'jaci.openrio.modules', name: 'BlackBox', version: '0.1.1'
+    }
+}
+
+// The WebUI Module allows us to view Robot Statistics, as well as schedule match timings and field layout from the
+// driver station's web browser.
+project(":5333-WebUI") {
+    archivesBaseName = "5333-WebUI"
+    
+    // WebUI Dependencies (currently Spark-Java and Handlebars.java)
+    dependencies {
+        compile group: 'com.sparkjava', name: 'spark-core', version: '2.3'
+        buildLibs group: 'com.sparkjava', name: 'spark-core', version: '2.3'
+        
+        compile 'com.github.jknack:handlebars:+'
+        buildLibs 'com.github.jknack:handlebars:+'
+    }
+}
+
+// The Autonomous Module loads Autonomous Configurations from the Main Config file. We keep this in a separate module so 
+// that it can be disabled if need be.
+project(":5333-Autonomous") {
+    archivesBaseName = "5333-Autonomous"
+}

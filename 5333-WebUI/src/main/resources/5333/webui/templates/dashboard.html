@@ -1,0 +1,18 @@
+{{#include t="include/base.html" title="Dashboard" }}
+<script type="text/javascript" src="/scripts/vendor/d3.min.js"> </script>
+<script type="text/javascript" src="/scripts/vendor/epoch.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="/styles/vendor/epoch.min.css">
+
+    <div class="container">
+        
+        <div class="row">
+            <div class="column">
+                {{import t="components/vision.html"}}
+            </div>
+            <div class="column">
+                {{import t="components/readout.html"}}
+            </div>
+        </div>
+        
+    </div>
+{{/include}}
