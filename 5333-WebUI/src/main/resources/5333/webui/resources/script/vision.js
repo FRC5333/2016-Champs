@@ -1,4 +1,22 @@
+var loc = window.location, new_uri;
+new_uri = "ws:"
+new_uri += "//" + loc.host;
+new_uri += "/socket/vision";
+
 var gauge;
+
+var socket = new WebSocket(new_uri);
+socket.onmessage = function(event) {
+    var json = JSON.parse(event.data);
+    gauge.clear();
+    for (var i in json) {
+        if (json.hasOwnProperty(i)) {
+            var rect = json[i];
+            gauge.push(rect.x, rect.y, rect.width, rect.height);
+        }
+    }
+    gauge.draw();
+};
 
 window.onload = function() {
     gauge = createGauge(document.getElementById("visionGauge"));

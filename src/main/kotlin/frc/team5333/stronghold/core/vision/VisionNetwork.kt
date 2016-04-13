@@ -1,5 +1,6 @@
 package frc.team5333.stronghold.core.vision
 
+import frc.team5333.stronghold.core.StrongholdCore
 import java.io.InputStream
 import java.math.BigInteger
 import java.net.ServerSocket
@@ -15,6 +16,8 @@ enum class VisionNetwork {
     lateinit var server: ServerSocket
     var listening = true
     var connected = false
+
+    var activeFrame: VisionFrame = VisionFrame(-1)
 
     fun bytesToInt(arr: ByteArray): Int = BigInteger(arr).toInt()
     fun bytesToFloat(arr: ByteArray): Float = java.lang.Float.intBitsToFloat(BigInteger(arr).toInt())
@@ -50,13 +53,14 @@ enum class VisionNetwork {
     fun handleSocket(socket: Socket) {
         try {
             connected = true
+            StrongholdCore.logger.info("Vision System Connected!")
             while (true) {
                 var inp = socket.inputStream
 
                 var negotiation = readInt(inp)
                 if (negotiation == 0xBA) {
                     var activeRect = readInt(inp)
-                    var rects: ArrayList<VisionRectangle> = ArrayList()
+                    var rects = VisionFrame(activeRect)
                     while(readInt(inp) == 0xBB) {
                         var rect = VisionRectangle()
                         rect.x = readInt(inp).toDouble()
@@ -65,11 +69,15 @@ enum class VisionNetwork {
                         rect.height = readInt(inp).toDouble()
                         rects.add(rect)
                     }
+                    activeFrame = rects
                 }
             }
         } catch (e: Exception) {
+            StrongholdCore.logger.error("Vision System Disconnected!")
+            StrongholdCore.logger.exception(e)
             if (!socket.isClosed) socket.close()
         }
         connected = false
+        activeFrame = VisionFrame(-1)
     }
 }

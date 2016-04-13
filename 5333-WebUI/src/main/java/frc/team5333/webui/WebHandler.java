@@ -13,6 +13,8 @@ import frc.team5333.webui.controller.DashboardController;
 import frc.team5333.webui.controller.IndexController;
 import frc.team5333.webui.websockets.SocketConfig;
 import frc.team5333.webui.websockets.SocketLogger;
+import frc.team5333.webui.websockets.SocketVision;
+import jaci.openrio.toast.core.thread.Heartbeat;
 import jaci.openrio.toast.lib.log.Logger;
 
 import java.io.*;
@@ -55,8 +57,10 @@ public class WebHandler {
         webSocket("/socket/logger", SocketLogger.class);
 //        webSocket("/socket/readout", SocketReadout.class);
         webSocket("/socket/config", SocketConfig.class);
+        webSocket("/socket/vision", SocketVision.class);
 //        webSocket("/socket/training", SocketTraining.class);
         Logger.addHandler(new SocketLogger());
+        Heartbeat.add(missed -> { SocketVision.tick(); });
 ////        StateTracker.addTicker(SocketReadout::tick);
 //        Heartbeat.add(missed -> { SocketReadout.tick(); });
 //        SocketTraining.init();
