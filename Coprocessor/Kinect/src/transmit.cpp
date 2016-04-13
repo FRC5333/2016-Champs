@@ -42,8 +42,9 @@ void Transmitter::run_transmitter(int *counter, SOCKET socket) {
         }
         
         intToBytes(0xBC, buf, i); i+=4;
-        send(socket, buf, i, 0);
+        int rc = send(socket, buf, i, MSG_NOSIGNAL);
         (*counter)++;
+        if (rc < 0) return;
     }
 }
 

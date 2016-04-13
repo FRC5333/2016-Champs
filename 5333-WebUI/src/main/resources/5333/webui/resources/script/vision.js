@@ -12,7 +12,7 @@ socket.onmessage = function(event) {
     for (var i in json) {
         if (json.hasOwnProperty(i)) {
             var rect = json[i];
-            gauge.push(rect.x, rect.y, rect.width, rect.height);
+            gauge.push(rect.x, rect.y, rect.width, rect.height, rect.active);
         }
     }
     gauge.draw();
@@ -44,12 +44,13 @@ function createGauge(element) {
     return gauge;
 }
 
-function pushGauge(gauge, x, y, width, height) {
+function pushGauge(gauge, x, y, width, height, active) {
     gauge.nodes.push({
         x: x / 640 * gauge.width,
         y: y / 360 * gauge.height,
         width: width / 640 * gauge.width,
-        height: height / 360 * gauge.height
+        height: height / 360 * gauge.height,
+        active: active
     });
 }
 
@@ -70,6 +71,7 @@ function drawGauge(gauge) {
         if (gauge.nodes.hasOwnProperty(node)) {
             var n = gauge.nodes[node];
             gauge.ctx.strokeStyle = "#AA33AA";
+            if (n.active) gauge.ctx.strokeStyle = "#33AA33";
             gauge.ctx.strokeRect(n.x, n.y, n.width, n.height);
 
             var cx = n.x + n.width / 2;
