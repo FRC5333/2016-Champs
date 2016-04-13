@@ -38,7 +38,7 @@ function createGauge(element) {
     gauge.width = gauge.canvas.width;
 
     gauge.clear = function() { clearGauge(gauge) };
-    gauge.push = function(x, y, width, height) { pushGauge(gauge, x, y, width, height) };
+    gauge.push = function(x, y, width, height, active) { pushGauge(gauge, x, y, width, height, active) };
     gauge.draw = function() { drawGauge(gauge) };
 
     return gauge;

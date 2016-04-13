@@ -39,6 +39,17 @@ public class SocketVision {
         CommandBus.parseMessage(message);
     }
 
+    public static void startTicker() {
+        new Thread(() -> {
+            while (true) {
+                tick();
+                try {
+                    Thread.sleep((long) (1000 / 30.0));
+                } catch (InterruptedException e) { }
+            }
+        }).start();
+    }
+
     public static void tick() {
         VisionFrame frame = VisionNetwork.INSTANCE.getActiveFrame();
         JsonArray array = new JsonArray();
