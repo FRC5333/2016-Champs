@@ -59,8 +59,8 @@ public class WebHandler {
         webSocket("/socket/config", SocketConfig.class);
         webSocket("/socket/vision", SocketVision.class);
 //        webSocket("/socket/training", SocketTraining.class);
-        SocketVision.startTicker();
         Logger.addHandler(new SocketLogger());
+        Heartbeat.add(missed -> { SocketVision.tick(); });
 ////        StateTracker.addTicker(SocketReadout::tick);
 //        Heartbeat.add(missed -> { SocketReadout.tick(); });
 //        SocketTraining.init();
