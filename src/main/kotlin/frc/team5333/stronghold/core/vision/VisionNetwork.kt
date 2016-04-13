@@ -56,7 +56,7 @@ enum class VisionNetwork {
                 var negotiation = readInt(inp)
                 if (negotiation == 0xBA) {
                     var activeRect = readInt(inp)
-                    var rects: ArrayList<VisionRectangle> = arrayListOf()
+                    var rects: ArrayList<VisionRectangle> = ArrayList()
                     while(readInt(inp) == 0xBB) {
                         var rect = VisionRectangle()
                         rect.x = readInt(inp).toDouble()
