@@ -52,7 +52,7 @@ public class WebHandler {
             return new Handlebars.SafeString(applyTemplate(template, hm));
         });
 
-        port(5801);
+        port(WebUIConfig.port);
 
         webSocket("/socket/logger", SocketLogger.class);
 //        webSocket("/socket/readout", SocketReadout.class);
@@ -60,7 +60,8 @@ public class WebHandler {
         webSocket("/socket/vision", SocketVision.class);
 //        webSocket("/socket/training", SocketTraining.class);
         Logger.addHandler(new SocketLogger());
-        Heartbeat.add(missed -> { SocketVision.tick(); });
+//        Heartbeat.add(missed -> { SocketVision.tick(); });
+        SocketVision.start();
 ////        StateTracker.addTicker(SocketReadout::tick);
 //        Heartbeat.add(missed -> { SocketReadout.tick(); });
 //        SocketTraining.init();

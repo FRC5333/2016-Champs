@@ -6,6 +6,7 @@ import frc.team5333.stronghold.core.vision.VisionFrame;
 import frc.team5333.stronghold.core.vision.VisionNetwork;
 import frc.team5333.stronghold.core.vision.VisionRectangle;
 import frc.team5333.webui.WebHandler;
+import frc.team5333.webui.WebUIConfig;
 import jaci.openrio.toast.core.command.CommandBus;
 import jaci.openrio.toast.core.thread.HeartbeatListener;
 import jaci.openrio.toast.lib.util.Pretty;
@@ -37,6 +38,17 @@ public class SocketVision {
     @OnWebSocketMessage
     public void message(Session session, String message) throws IOException {
         CommandBus.parseMessage(message);
+    }
+
+    public static void start() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    tick();
+                    Thread.sleep((long) (1000.0 / WebUIConfig.Vision.display_framerate));
+                } catch (InterruptedException e) { }
+            }
+        }).start();
     }
 
     public static void tick() {

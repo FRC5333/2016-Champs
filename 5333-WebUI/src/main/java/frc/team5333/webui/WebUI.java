@@ -1,5 +1,6 @@
 package frc.team5333.webui;
 
+import frc.team5333.stronghold.core.configs.ReflectConfig;
 import jaci.openrio.toast.lib.module.ToastModule;
 
 public class WebUI extends ToastModule {
@@ -16,6 +17,7 @@ public class WebUI extends ToastModule {
 
     @Override
     public void prestart() {
+        new ReflectConfig("5333-WebUI", WebUIConfig.class);
         WebHandler.init();
     }
 
