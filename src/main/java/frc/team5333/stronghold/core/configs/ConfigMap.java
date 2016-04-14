@@ -25,4 +25,10 @@ public class ConfigMap {
                 p = 0.8, d = 0.0, a = 0.0;  // Scalar
     }
 
+    public static class Vision {
+        public static class Camera {
+            public static double horizontal_fov = 57;   // Degrees
+        }
+    }
+
 }

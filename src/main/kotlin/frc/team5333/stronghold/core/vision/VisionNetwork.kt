@@ -67,6 +67,7 @@ enum class VisionNetwork {
                         rect.y = readInt(inp).toDouble()
                         rect.width = readInt(inp).toDouble()
                         rect.height = readInt(inp).toDouble()
+                        rect.finalize()
                         rects.add(rect)
                     }
                     activeFrame = rects

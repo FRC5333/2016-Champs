@@ -8,8 +8,6 @@ import frc.team5333.stronghold.core.vision.VisionRectangle;
 import frc.team5333.webui.WebHandler;
 import frc.team5333.webui.WebUIConfig;
 import jaci.openrio.toast.core.command.CommandBus;
-import jaci.openrio.toast.core.thread.HeartbeatListener;
-import jaci.openrio.toast.lib.util.Pretty;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -63,6 +61,7 @@ public class SocketVision {
                 object.put("y", rect.getY());
                 object.put("width", rect.getWidth());
                 object.put("height", rect.getHeight());
+                object.put("angle", rect.getHorizontalAngle());
                 array.add(object);
             }
         }
