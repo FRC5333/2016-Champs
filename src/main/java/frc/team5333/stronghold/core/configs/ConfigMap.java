@@ -31,4 +31,10 @@ public class ConfigMap {
         }
     }
 
+    public static class Control {
+        public static double
+                turn_throttle_coefficient = 0.5,
+                fine_control_throttle_speed = 0.5;
+    }
+
 }

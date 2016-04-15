@@ -37,4 +37,12 @@ public class Operator {
         };
     }
 
+    public static LogitechJoy getLeftJoystick() {
+        return joy_left;
+    }
+
+    public static LogitechJoy getRightJoystick() {
+        return joy_right;
+    }
+
 }
