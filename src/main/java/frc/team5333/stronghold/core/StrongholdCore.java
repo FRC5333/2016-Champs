@@ -7,6 +7,7 @@ import frc.team5333.stronghold.core.data.MatchInfo;
 import frc.team5333.stronghold.core.control.IO;
 import frc.team5333.stronghold.core.strategy.StrategyController;
 import frc.team5333.stronghold.core.strategy.StrategyOperator;
+import frc.team5333.stronghold.core.strategy.StrategyVisionAlign;
 import frc.team5333.stronghold.core.systems.Systems;
 import frc.team5333.stronghold.core.vision.VisionNetwork;
 import jaci.openrio.toast.core.StateTracker;
@@ -40,6 +41,10 @@ public class StrongholdCore extends IterativeModule {
         VisionNetwork.INSTANCE.start();
 
         StateTracker.addTicker((s) -> { Scheduler.getInstance().run(); });
+
+        Operator.getRightJoystick().getButton(3).whenPressed(Operator.command(() -> {
+            StrategyController.INSTANCE.setStrategy(new StrategyVisionAlign());
+        }));
     }
 
     @Override

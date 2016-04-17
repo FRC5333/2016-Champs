@@ -20,7 +20,7 @@ public class IO {
         motor_master_left       = Registrar.canTalon(ConfigMap.IO.Motor.left_master);
         motor_slave_left        = Registrar.canTalon(ConfigMap.IO.Motor.left_slave);
         motor_master_right      = Registrar.canTalon(ConfigMap.IO.Motor.right_master);
-        motor_master_left       = Registrar.canTalon(ConfigMap.IO.Motor.right_slave);
+        motor_slave_right       = Registrar.canTalon(ConfigMap.IO.Motor.right_slave);
 
         motor_flywheel_top      = Registrar.canTalon(ConfigMap.IO.Motor.flywheel_top);
         motor_flywheel_bottom   = Registrar.canTalon(ConfigMap.IO.Motor.flywheel_bottom);
@@ -33,6 +33,17 @@ public class IO {
     public static double maybeIMU(Function<ADIS16448_IMU, Double> d) {
         if (IMU_SUPPORTED()) return d.apply(imu_mxp);
         return 0.0;
+    }
+
+    public static double imuAlignAngle() {
+        return maybeIMU((imu) -> {
+            switch (ConfigMap.Control.Align.gyroAlignAxis) {
+                case "X": return imu.getAngleX();
+                case "Y": return imu.getAngleY();
+                case "Z": return imu.getAngleZ();
+                default:  return imu.getAngleY();
+            }
+        });
     }
 
     public static boolean IMU_SUPPORTED() {
@@ -48,13 +59,13 @@ public class IO {
     }
 
     public static void setLeftMotors(double value) {
-        motor_master_right.set(value);
+        motor_master_left.set(value);
         motor_slave_left.set(value);
     }
 
     public static void setRightMotors(double value) {
+        motor_master_right.set(value);
         motor_slave_right.set(value);
-        motor_slave_left.set(value);
     }
 
     public static void setTopFlywheel(double value) {

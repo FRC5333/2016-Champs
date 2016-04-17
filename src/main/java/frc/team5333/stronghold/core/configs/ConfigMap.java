@@ -35,6 +35,22 @@ public class ConfigMap {
         public static double
                 turn_throttle_coefficient = 0.5,
                 fine_control_throttle_speed = 0.5;
+        public static class Shoot {
+            public static double
+                        intake_hold_throttle = -0.25,
+                        intake_fire_throttle = 0.9;
+        }
+        public static class Align {
+            public static double
+                        p = 0.7,
+                        i = 0.001,
+                        d = 0.05;
+
+            public static String gyroAlignAxis = "Y";
+            public static double
+                        acceptable_error = 0.05,
+                        align_timeout = 2000;
+        }
     }
 
 }

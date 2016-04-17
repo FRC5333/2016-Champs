@@ -13,8 +13,8 @@ public class JoyMap {
 
     public static class Operator {
         public static int
-                left = 0,
-                right = 1;
+                left = 1,
+                right = 0;
     }
 
 }

@@ -4,10 +4,13 @@ public class Systems {
 
     public static ControlSystem control;
     public static DriveSystem drive;
+    public static ShootSystem shoot;
 
     public static void init() {
         control = new ControlSystem();
         drive   = new DriveSystem();
+        shoot   = new ShootSystem();
+        shoot.init();
     }
 
     /**
@@ -16,6 +19,7 @@ public class Systems {
     public static void tick() {
         control.tick();
         drive.tick();
+        shoot.tick();
     }
 
 }

@@ -1,13 +1,14 @@
 package frc.team5333.stronghold.core.systems
 
 import frc.team5333.stronghold.core.configs.ConfigMap
+import frc.team5333.stronghold.core.control.ControlLease
 import frc.team5333.stronghold.core.control.IO
 import frc.team5333.stronghold.core.control.Operator
 
 class DriveSystem {
+    val LEASE = ControlLease(this)
 
     // TODO: Use button for "FineTuned" turning (for alignment)
-    // TODO: Encoder Readout Here
 
     var throttle_scale = 1.0
 
@@ -23,6 +24,9 @@ class DriveSystem {
         IO.setRightMotors(-r)
     }
 
+    fun leftEncoder(): Double = IO.getLeftEncoderPosition()
+    fun rightEncoder(): Double = -IO.getRightEncoderPosition()
+
     fun getDrivePairs(): Pair<Double, Double> {
         var lJoy = Operator.getLeftJoystick()
         var rJoy = Operator.getRightJoystick()
@@ -31,9 +35,9 @@ class DriveSystem {
         if (mode == ControlSystem.DriveMode.BOTH)
             return Pair(sq(rJoy.y), sq(lJoy.y))
         else if (mode == ControlSystem.DriveMode.LEFT_ONLY)
-            return jaciDrive3(sq(lJoy.y), sq(-lJoy.x), lJoy.twist)
+            return jaciDrive3(sq(lJoy.y), sq(lJoy.x), lJoy.twist)
         else if (mode == ControlSystem.DriveMode.RIGHT_ONLY)
-            return jaciDrive3(sq(rJoy.y), sq(-rJoy.x), rJoy.twist)
+            return jaciDrive3(sq(rJoy.y), sq(rJoy.x), rJoy.twist)
         return Pair(0.0, 0.0)
     }
 

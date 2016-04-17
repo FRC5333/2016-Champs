@@ -3,7 +3,7 @@ new_uri = "ws:"
 new_uri += "//" + loc.host;
 new_uri += "/socket/config";
 
-var configTarget = "";
+var configTarget = getParameterByName("config");
 
 var socket = new WebSocket(new_uri);
 socket.onmessage = function(event) {
@@ -46,7 +46,6 @@ function updateConfig() {
 }
 
 window.onload = function() {
-    configTarget = getParameterByName("config");
     document.getElementById("config_area").addEventListener('keydown', textAreaKeyDown, false);
     document.addEventListener("keydown", function(e) {
         if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {

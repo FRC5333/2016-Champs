@@ -56,7 +56,8 @@ allprojects {
     }
     
     // Formalities.
-    gradlerio.team = "5333"
+    gradlerio.team = project.hasProperty("team") ? team : "5333"
+    gradlerio.rioIP = "10.53.33.56"
     gradlerio.deployFile = "toast/modules/${archivesBaseName}.jar"
 }
 
