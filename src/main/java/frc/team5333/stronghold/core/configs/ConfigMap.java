@@ -51,6 +51,8 @@ public class ConfigMap {
                         acceptable_error = 0.05,
                         align_timeout = 2000;
         }
+        public static int control_loop_freq = 100;
+        public static int pid_target_samples = 5;
     }
 
 }

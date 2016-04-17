@@ -15,6 +15,7 @@ class StrategyVisionAlign : Strategy() {
 
     var started = false
     var start_time = 0L
+    var lastFrameID = -1
 
     lateinit var internal_pid: InternalPID
     lateinit var lease: ControlLease.Lease<DriveSystem>
@@ -27,29 +28,28 @@ class StrategyVisionAlign : Strategy() {
                                     ConfigMap.Control.Align.i,
                                     ConfigMap.Control.Align.d)
         lease = Systems.drive.LEASE.acquire(ControlLease.Priority.HIGH)
-        var frame = VisionNetwork.INSTANCE.activeFrame
-        if (frame.size != 0) {
-            var image = frame.getSelectedRect().horizontalAngle
-            var imu = Math.toRadians(IO.imuAlignAngle())
-
-            var sp = image + imu
-            internal_pid.target = sp
-        }
+        internal_pid.target = 0.0
     }
 
-    override fun tick() {
+    override fun tick() { }
+
+    override fun tickFast() {
         if (!started) start_time = System.currentTimeMillis()
         started = true
 
         var frame = VisionNetwork.INSTANCE.activeFrame
         if (frame.size != 0) {
             var image = frame.getSelectedRect().horizontalAngle
-            var imu = Math.toRadians(IO.imuAlignAngle())        // TODO: Setpoint update on vision frame received. Run in a faster control loop
+            var imu = Math.toRadians(IO.imuAlignAngle())
 
-//            var sp = image + imu
-//            internal_pid.target = sp
+            if (lastFrameID != frame.frameID) {
+                lastFrameID = frame.frameID
+
+                internal_pid.target = image + imu
+            }
 
             var output = internal_pid.update(imu)
+
             lease.use {
                 it.drive(-output, output)
             }
@@ -61,8 +61,10 @@ class StrategyVisionAlign : Strategy() {
 
     override fun isOperatorControl(): Boolean = false
 
+    override fun isFast(): Boolean = true
+
     override fun isComplete(): Boolean = started &&
-            (internal_pid.hasSettled(ConfigMap.Control.Align.acceptable_error)
+            (internal_pid.onTarget(ConfigMap.Control.Align.acceptable_error)
                 || System.currentTimeMillis() - start_time > ConfigMap.Control.Align.align_timeout)
 
 }

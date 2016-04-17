@@ -2,6 +2,7 @@ package frc.team5333.stronghold.core;
 
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.team5333.stronghold.core.configs.Configurations;
+import frc.team5333.stronghold.core.control.ControlLoopManager;
 import frc.team5333.stronghold.core.control.Operator;
 import frc.team5333.stronghold.core.data.MatchInfo;
 import frc.team5333.stronghold.core.control.IO;
@@ -36,6 +37,8 @@ public class StrongholdCore extends IterativeModule {
         IO.init();
         Operator.init();
         Systems.init();
+
+        ControlLoopManager.start();
 
         MatchInfo.load();
         VisionNetwork.INSTANCE.start();

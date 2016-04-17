@@ -17,6 +17,9 @@ enum class StrategyController {
      */
     fun tick(fast: Boolean) {
         synchronized(lock) {
+            if (fast)   activeStrategy.tickFast()
+            else        activeStrategy.tick()
+
             if (activeStrategy.isComplete()) {
                 var next_strat = activeStrategy.nextStrategy()
                 if (next_strat != null) {
@@ -25,8 +28,6 @@ enum class StrategyController {
                     setStrategy_Now(StrategyOperator())
                 }
             }
-            if (fast)   activeStrategy.tickFast()
-            else        activeStrategy.tick()
         }
     }
 

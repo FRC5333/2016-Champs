@@ -27,4 +27,12 @@ class VisionRectangle {
         )
     }
 
+    override fun hashCode(): Int{
+        var result = x.hashCode()
+        result += 31 * result + y.hashCode()
+        result += 31 * result + width.hashCode()
+        result += 31 * result + height.hashCode()
+        return result
+    }
+
 }

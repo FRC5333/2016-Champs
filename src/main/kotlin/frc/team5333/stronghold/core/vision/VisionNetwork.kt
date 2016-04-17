@@ -1,6 +1,7 @@
 package frc.team5333.stronghold.core.vision
 
 import frc.team5333.stronghold.core.StrongholdCore
+import frc.team5333.stronghold.core.events.bus.EventBus
 import java.io.InputStream
 import java.math.BigInteger
 import java.net.ServerSocket
@@ -61,6 +62,7 @@ enum class VisionNetwork {
                 if (negotiation == 0xBA) {
                     var activeRect = readInt(inp)
                     var rects = VisionFrame(activeRect)
+                    var id = 0
                     while(readInt(inp) == 0xBB) {
                         var rect = VisionRectangle()
                         rect.x = readInt(inp).toDouble()
@@ -68,9 +70,11 @@ enum class VisionNetwork {
                         rect.width = readInt(inp).toDouble()
                         rect.height = readInt(inp).toDouble()
                         rect.finalize()
+                        id += rect.hashCode()
                         rects.add(rect)
                     }
                     activeFrame = rects
+                    activeFrame.frameID = id
                 }
             }
         } catch (e: Exception) {
