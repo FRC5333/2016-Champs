@@ -1,14 +1,12 @@
 package frc.team5333.stronghold.core.vision
 
 import frc.team5333.stronghold.core.StrongholdCore
-import frc.team5333.stronghold.core.events.bus.EventBus
 import java.io.InputStream
 import java.math.BigInteger
 import java.net.ServerSocket
 import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.util.*
 
 enum class VisionNetwork {
     INSTANCE;

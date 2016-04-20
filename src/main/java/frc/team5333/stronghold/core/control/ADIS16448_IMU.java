@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
+import frc.team5333.stronghold.core.StrongholdCore;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -158,8 +159,11 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
             //UsageReporting.report(tResourceType.kResourceType_ADIS16448, 0);
             LiveWindow.addSensor("ADIS16448_IMU", 0, this);
         }
-        if (!found_imu)
+        if (!found_imu) {
+            StrongholdCore.logger.error("Could not find IMU!");
             DriverStation.reportError("could not find ADIS16448", false);
+        }
+        StrongholdCore.logger.info("Found IMU!");
     }
 
     /**

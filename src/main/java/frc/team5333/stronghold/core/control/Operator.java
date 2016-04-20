@@ -3,8 +3,6 @@ package frc.team5333.stronghold.core.control;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.team5333.stronghold.core.configs.JoyMap;
 
-import java.util.function.Consumer;
-
 public class Operator {
 
     public static LogitechJoy joy_left, joy_right;

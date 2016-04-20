@@ -1,7 +1,6 @@
 package frc.team5333.stronghold.core.control;
 
 import edu.wpi.first.wpilibj.Notifier;
-import frc.team5333.stronghold.core.StrongholdCore;
 import frc.team5333.stronghold.core.configs.ConfigMap;
 import frc.team5333.stronghold.core.strategy.StrategyController;
 

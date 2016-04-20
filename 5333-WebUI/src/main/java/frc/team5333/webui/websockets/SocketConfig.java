@@ -4,7 +4,6 @@ import com.grack.nanojson.JsonArray;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParser;
 import com.grack.nanojson.JsonParserException;
-import frc.team5333.stronghold.core.StrongholdCore;
 import frc.team5333.stronghold.core.configs.Configurations;
 import frc.team5333.webui.WebHandler;
 import jaci.openrio.toast.lib.module.ModuleConfig;

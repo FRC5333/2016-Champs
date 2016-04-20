@@ -2,7 +2,6 @@ package frc.team5333.stronghold.core.strategy
 
 import frc.team5333.stronghold.core.control.ControlLease
 import frc.team5333.stronghold.core.systems.DriveSystem
-import frc.team5333.stronghold.core.systems.ShootSystem
 import frc.team5333.stronghold.core.systems.Systems
 
 class StrategyOperator : Strategy() {

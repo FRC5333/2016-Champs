@@ -1,6 +1,5 @@
 package frc.team5333.stronghold.core.systems
 
-import edu.wpi.first.wpilibj.Joystick
 import frc.team5333.stronghold.core.control.LogitechJoy
 import frc.team5333.stronghold.core.control.Operator
 import java.util.*

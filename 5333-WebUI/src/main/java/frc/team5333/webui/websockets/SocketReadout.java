@@ -5,8 +5,6 @@ import com.grack.nanojson.JsonObject;
 import frc.team5333.stronghold.core.control.ADIS16448_IMU;
 import frc.team5333.stronghold.core.control.IO;
 import frc.team5333.stronghold.core.strategy.StrategyController;
-import frc.team5333.stronghold.core.systems.Systems;
-import frc.team5333.stronghold.core.vision.VisionNetwork;
 import frc.team5333.webui.WebHandler;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
@@ -53,6 +51,12 @@ public class SocketReadout {
                 IO.maybeIMU(ADIS16448_IMU::getAngleX),
                 IO.maybeIMU(ADIS16448_IMU::getAngleY),
                 IO.maybeIMU(ADIS16448_IMU::getAngleZ)
+        ));
+
+        obj.put("IMU-RATE", String.format("%.2f %.2f %.2f",
+                IO.maybeIMU(ADIS16448_IMU::getRateX),
+                IO.maybeIMU(ADIS16448_IMU::getRateY),
+                IO.maybeIMU(ADIS16448_IMU::getRateZ)
         ));
 
         sessions.forEach(session -> {

@@ -43,6 +43,7 @@ public class ConfigMap {
         public static class Align {
             public static double
                         p = 0.7,
+                        f = 0.0,
                         i = 0.001,
                         d = 0.05;
 

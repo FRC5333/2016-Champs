@@ -1,7 +1,6 @@
 package frc.team5333.stronghold.core.vision
 
 import frc.team5333.stronghold.core.configs.ConfigMap
-import jaci.openrio.toast.lib.math.MathHelper
 
 class VisionRectangle {
 

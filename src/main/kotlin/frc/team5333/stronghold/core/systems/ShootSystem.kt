@@ -1,12 +1,8 @@
 package frc.team5333.stronghold.core.systems
 
 import edu.wpi.first.wpilibj.Joystick
-import frc.team5333.stronghold.core.configs.ConfigMap
 import frc.team5333.stronghold.core.control.ControlLease
 import frc.team5333.stronghold.core.control.IO
-import frc.team5333.stronghold.core.control.Operator
-import frc.team5333.stronghold.core.vision.VisionNetwork
-import java.util.*
 
 class ShootSystem {
     var LEASE = ControlLease(this)
