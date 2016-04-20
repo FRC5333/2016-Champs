@@ -1,13 +1,14 @@
 package frc.team5333.stronghold.core.systems
 
 import edu.wpi.first.wpilibj.Joystick
+import frc.team5333.stronghold.core.configs.ConfigMap
 import frc.team5333.stronghold.core.control.ControlLease
 import frc.team5333.stronghold.core.control.IO
+import frc.team5333.stronghold.core.vision.VisionNetwork
 
 class ShootSystem {
     var LEASE = ControlLease(this)
 
-    var passive = true
     lateinit private var lease_instance: ControlLease.Lease<ShootSystem>
 
     fun init() {
@@ -18,8 +19,8 @@ class ShootSystem {
         runTeleop()
     }
 
-    fun setTop(v: Double) = IO.setTopFlywheel(-v)
-    fun setBottom(v: Double) = IO.setBottomFlywheel(-v)
+    fun setTop(v: Double) = IO.setTopFlywheel(v)
+    fun setBottom(v: Double) = IO.setBottomFlywheel(v)
     fun setIntake(v: Double) = IO.setIntake(v)
     fun setAll(v: Double) {
         setTop(v)
@@ -27,32 +28,42 @@ class ShootSystem {
         setIntake(v)
     }
 
+    fun withinDeadzone(axis: Double): Boolean = Math.abs(axis) <= ConfigMap.Control.Shoot.joystick_override_deadzone
+
     fun runTeleop() {
-//        var joy = Systems.control.shootJoystick()
-//        var top = 0.0
-//        var bottom = 0.0
-//        var intake = 0.0
-//
-//        if (passive) {
-//            if (!VisionNetwork.INSTANCE.activeFrame.isEmpty()) {
-//                top = 0.8
-//                bottom = 0.8
-//                intake = ConfigMap.Control.Shoot.intake_hold_throttle
-//            }
-//        }
-//
-//        if (!passive || (joy.isPresent && joy.get().bumper)) {
-//            var p = getFlywheelPairs()
-//            top = p.first
-//            bottom = p.first
-//            intake = p.second
-//        }
-//
-//        lease_instance.use {
-//            it.setTop(top)
-//            it.setBottom(bottom)
-//            it.setIntake(intake)
-//        }
+        var joystick = Systems.control.shootJoystick()
+        if (joystick.isPresent) {
+            var joy = joystick.get()
+            var slider = joy.slider > 0.5
+
+            var top = 0.0
+            var bottom = 0.0
+            var intake = 0.0
+
+            if (!withinDeadzone(joy.y)) {
+                // Manual
+                top = joy.y
+                bottom = joy.y
+            } else if (!VisionNetwork.INSTANCE.activeFrame.isEmpty() && slider) {
+                // Passive
+                top = ConfigMap.Control.Shoot.spinup_flywheel_throttle
+                bottom = ConfigMap.Control.Shoot.spinup_flywheel_throttle
+            }
+
+            if (!withinDeadzone(joy.x)) {
+                // Manual
+                intake = joy.x
+            } else if (!VisionNetwork.INSTANCE.activeFrame.isEmpty() && slider) {
+                // Passive
+                intake = ConfigMap.Control.Shoot.intake_hold_throttle
+            }
+
+            lease_instance.use {
+                it.setTop(top)
+                it.setBottom(bottom)
+                it.setIntake(intake)
+            }
+        }
     }
 
     fun getFlywheelPairs(): Pair<Double, Double> {

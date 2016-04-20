@@ -6,8 +6,6 @@ import frc.team5333.stronghold.core.events.bus.EventBus
 enum class StrategyController {
     INSTANCE;
 
-    private var fast = false
-
     private var activeStrategy: Strategy = StrategyBlank()
 
     val lock = Object()
@@ -32,7 +30,7 @@ enum class StrategyController {
     }
 
     fun tickFast() {
-        if (fast) tick(true)
+        tick(true)
     }
 
     fun tickSlow() {
@@ -50,7 +48,6 @@ enum class StrategyController {
     private fun setStrategy_Now(value: Strategy) {
         activeStrategy.onDisable()
         EventBus.INSTANCE.raiseEvent(StrategyEvent.StrategyChangeEvent(value, activeStrategy))
-        fast = value.isFast()
         activeStrategy = value
         value.onEnable()
     }

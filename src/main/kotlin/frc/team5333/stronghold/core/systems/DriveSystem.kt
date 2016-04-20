@@ -33,18 +33,21 @@ class DriveSystem {
         var mode = Systems.control.driveMode()
 
         if (mode == ControlSystem.DriveMode.BOTH)
-            return Pair(sq(rJoy.y), sq(lJoy.y))
+            return Pair(sq(lJoy.y), sq(rJoy.y))
         else if (mode == ControlSystem.DriveMode.LEFT_ONLY)
-            return jaciDrive3(sq(lJoy.y), sq(lJoy.x), lJoy.twist)
+            return jaciDrive3(sq(lJoy.y), sq(lJoy.x), lJoy.twist, lJoy.bumper)
         else if (mode == ControlSystem.DriveMode.RIGHT_ONLY)
-            return jaciDrive3(sq(rJoy.y), sq(rJoy.x), rJoy.twist)
+            return jaciDrive3(sq(rJoy.y), sq(rJoy.x), rJoy.twist, rJoy.bumper)
         return Pair(0.0, 0.0)
     }
 
-    internal fun jaciDrive3(throttle: Double, rotate: Double, twist: Double): Pair<Double, Double> {
+    internal fun jaciDrive3(throttle: Double, rotate: Double, twist: Double, fine: Boolean): Pair<Double, Double> {
+        var scale = 1.0
+        if (fine) scale = ConfigMap.Control.fine_control_throttle_speed
+
         var throttleCoefficient = ConfigMap.Control.turn_throttle_coefficient
-        var adjustedRotation = (rotate * throttleCoefficient) + (rotate * twist * twist * (1 - throttleCoefficient))
-        var adjustedThrottle = throttle
+        var adjustedRotation = (rotate * scale * throttleCoefficient) + (rotate * scale * twist * twist * (1 - throttleCoefficient))
+        var adjustedThrottle = throttle * scale
 
         var left = 0.0
         var right = 0.0

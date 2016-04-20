@@ -27,6 +27,4 @@ abstract class Strategy {
         return strat
     }
 
-    open fun isFast(): Boolean = false
-
 }

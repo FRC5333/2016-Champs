@@ -39,6 +39,10 @@ public class ConfigMap {
             public static double
                         intake_hold_throttle = -0.25,
                         intake_fire_throttle = 0.9;
+
+            public static double
+                        joystick_override_deadzone = 0.2,
+                        spinup_flywheel_throttle = 0.8;
         }
         public static class Align {
             public static double
@@ -51,6 +55,14 @@ public class ConfigMap {
             public static double
                         acceptable_error = 0.05,
                         align_timeout = 2000;
+        }
+        public static class Motors {
+            public static double
+                        left_coefficient = 1.0,
+                        right_coefficient = 1.0,
+                        flywheel_top_coefficient = 1.0,
+                        flywheel_bottom_coefficient = 1.0,
+                        flywheel_intake_coefficient = 1.0;
         }
         public static int control_loop_freq = 100;
         public static int pid_target_samples = 5;

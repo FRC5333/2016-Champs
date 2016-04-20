@@ -65,8 +65,6 @@ class StrategyVisionAlign : Strategy() {
 
     override fun isOperatorControl(): Boolean = false
 
-    override fun isFast(): Boolean = true
-
     override fun isComplete(): Boolean = started &&
             (System.currentTimeMillis() - start_time > ConfigMap.Control.Align.align_timeout)
 

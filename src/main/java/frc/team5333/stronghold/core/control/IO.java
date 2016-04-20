@@ -59,24 +59,29 @@ public class IO {
     }
 
     public static void setLeftMotors(double value) {
+        value = value * ConfigMap.Control.Motors.left_coefficient;
         motor_master_left.set(value);
         motor_slave_left.set(value);
     }
 
     public static void setRightMotors(double value) {
+        value = value * ConfigMap.Control.Motors.right_coefficient;
         motor_master_right.set(value);
         motor_slave_right.set(value);
     }
 
     public static void setTopFlywheel(double value) {
+        value = value * ConfigMap.Control.Motors.flywheel_top_coefficient;
         motor_flywheel_top.set(value);
     }
 
     public static void setBottomFlywheel(double value) {
+        value = value * ConfigMap.Control.Motors.flywheel_bottom_coefficient;
         motor_flywheel_bottom.set(value);
     }
 
     public static void setIntake(double value) {
+        value = value * ConfigMap.Control.Motors.flywheel_intake_coefficient;
         motor_intake.set(value);
     }
 

@@ -38,7 +38,7 @@ class ControlSystem {
     fun driveButton(buttonID: Int): Boolean {
         var j = driveJoystick()
         if (j.isPresent) return j.get().getRawButton(buttonID)
-        return false
+        return Operator.getLeftJoystick().getRawButton(buttonID)
     }
 
     fun shootButton(buttonID: Int): Boolean {
