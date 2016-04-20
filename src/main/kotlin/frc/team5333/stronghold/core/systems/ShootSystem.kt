@@ -22,23 +22,27 @@ class ShootSystem {
     fun setTop(v: Double) = IO.setTopFlywheel(v)
     fun setBottom(v: Double) = IO.setBottomFlywheel(v)
     fun setIntake(v: Double) = IO.setIntake(v)
+    fun setShittake(v: Double) = IO.setShittake(v)
     fun setAll(v: Double) {
         setTop(v)
         setBottom(v)
         setIntake(v)
+        setShittake(v)
     }
 
     fun withinDeadzone(axis: Double): Boolean = Math.abs(axis) <= ConfigMap.Control.Shoot.joystick_override_deadzone
 
     fun runTeleop() {
         var joystick = Systems.control.shootJoystick()
+
+        var top = 0.0
+        var bottom = 0.0
+        var intake = 0.0
+        var shittake = 0.0
+
         if (joystick.isPresent) {
             var joy = joystick.get()
             var slider = joy.slider > 0.5
-
-            var top = 0.0
-            var bottom = 0.0
-            var intake = 0.0
 
             if (!withinDeadzone(joy.y)) {
                 // Manual
@@ -58,11 +62,15 @@ class ShootSystem {
                 intake = ConfigMap.Control.Shoot.intake_hold_throttle
             }
 
-            lease_instance.use {
-                it.setTop(top)
-                it.setBottom(bottom)
-                it.setIntake(intake)
-            }
+            if (joy.getRawButton(3))        shittake = 1.0
+            else if (joy.getRawButton(4))   shittake = -1.0
+        }
+
+        lease_instance.use {
+            it.setTop(top)
+            it.setBottom(bottom)
+            it.setIntake(intake)
+            it.setShittake(shittake)
         }
     }
 

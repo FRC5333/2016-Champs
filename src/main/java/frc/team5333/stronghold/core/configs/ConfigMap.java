@@ -13,7 +13,8 @@ public class ConfigMap {
             public static int
                     flywheel_top    = 14,   // CAN - SRX
                     flywheel_bottom = 15,   // CAN - SRX
-                    intake          = 0;    // PWM - SR
+                    intake          = 0,    // PWM - SR
+                    shittake        = 1;    // PWM - SR
         }
     }
 
@@ -41,7 +42,7 @@ public class ConfigMap {
                         intake_fire_throttle = 0.9;
 
             public static double
-                        joystick_override_deadzone = 0.2,
+                        joystick_override_deadzone = 0.1,
                         spinup_flywheel_throttle = 0.8;
         }
         public static class Align {
@@ -62,7 +63,8 @@ public class ConfigMap {
                         right_coefficient = 1.0,
                         flywheel_top_coefficient = 1.0,
                         flywheel_bottom_coefficient = 1.0,
-                        flywheel_intake_coefficient = 1.0;
+                        flywheel_intake_coefficient = 1.0,
+                        shittake_coefficient = 1.0;
         }
         public static int control_loop_freq = 100;
         public static int pid_target_samples = 5;

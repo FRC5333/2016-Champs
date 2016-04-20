@@ -12,7 +12,7 @@ public class IO {
 
     public static CANTalon motor_master_left, motor_slave_left, motor_master_right, motor_slave_right;
     public static CANTalon motor_flywheel_top, motor_flywheel_bottom;
-    public static Talon motor_intake;
+    public static Talon motor_intake, motor_shittake;
 
     public static ADIS16448_IMU imu_mxp;
 
@@ -26,6 +26,10 @@ public class IO {
         motor_flywheel_bottom   = Registrar.canTalon(ConfigMap.IO.Motor.flywheel_bottom);
 
         motor_intake            = Registrar.talon(ConfigMap.IO.Motor.intake);
+
+        // Our St. Louis addition. I didn't like the name of "Intake 2" so I called it the "Shit Take" because
+        // no one can tell me otherwise
+        motor_shittake          = Registrar.talon(ConfigMap.IO.Motor.shittake);
 
         if (IMU_SUPPORTED()) imu_mxp = new ADIS16448_IMU();
     }
@@ -83,6 +87,11 @@ public class IO {
     public static void setIntake(double value) {
         value = value * ConfigMap.Control.Motors.flywheel_intake_coefficient;
         motor_intake.set(value);
+    }
+
+    public static void setShittake(double value) {
+        value = value * ConfigMap.Control.Motors.shittake_coefficient;
+        motor_shittake.set(value);
     }
 
 }
