@@ -12,7 +12,7 @@ class ShootSystem {
     lateinit private var lease_instance: ControlLease.Lease<ShootSystem>
 
     fun init() {
-        lease_instance = LEASE.acquire(ControlLease.Priority.HIGH)
+        lease_instance = LEASE.acquire(ControlLease.Priority.NORMAL)
     }
 
     fun tick() {
@@ -22,12 +22,10 @@ class ShootSystem {
     fun setTop(v: Double) = IO.setTopFlywheel(v)
     fun setBottom(v: Double) = IO.setBottomFlywheel(v)
     fun setIntake(v: Double) = IO.setIntake(v)
-    fun setShittake(v: Double) = IO.setShittake(v)
     fun setAll(v: Double) {
         setTop(v)
         setBottom(v)
         setIntake(v)
-        setShittake(v)
     }
 
     fun withinDeadzone(axis: Double): Boolean = Math.abs(axis) <= ConfigMap.Control.Shoot.joystick_override_deadzone
@@ -61,16 +59,12 @@ class ShootSystem {
                 // Passive
                 intake = ConfigMap.Control.Shoot.intake_hold_throttle
             }
-
-            if (joy.getRawButton(3))        shittake = 1.0
-            else if (joy.getRawButton(4))   shittake = -1.0
         }
 
         lease_instance.use {
             it.setTop(top)
             it.setBottom(bottom)
             it.setIntake(intake)
-            it.setShittake(shittake)
         }
     }
 

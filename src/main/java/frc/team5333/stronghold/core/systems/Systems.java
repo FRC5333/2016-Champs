@@ -5,11 +5,14 @@ public class Systems {
     public static ControlSystem control;
     public static DriveSystem drive;
     public static ShootSystem shoot;
+    public static ShittakeSystem shittake;
 
     public static void init() {
-        control = new ControlSystem();
-        drive   = new DriveSystem();
-        shoot   = new ShootSystem();
+        control     = new ControlSystem();
+        drive       = new DriveSystem();
+        shittake    = new ShittakeSystem();
+        shittake.init();
+        shoot       = new ShootSystem();
         shoot.init();
     }
 
@@ -20,6 +23,7 @@ public class Systems {
         control.tick();
         drive.tick();
         shoot.tick();
+        shittake.tick();
     }
 
 }

@@ -1,6 +1,7 @@
 package frc.team5333.stronghold.core.control;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import frc.team5333.stronghold.core.configs.ConfigMap;
 import jaci.openrio.toast.core.Environment;
@@ -13,6 +14,8 @@ public class IO {
     public static CANTalon motor_master_left, motor_slave_left, motor_master_right, motor_slave_right;
     public static CANTalon motor_flywheel_top, motor_flywheel_bottom;
     public static Talon motor_intake, motor_shittake;
+
+    public static Solenoid shittake_raise, shittake_lower;
 
     public static ADIS16448_IMU imu_mxp;
 
@@ -30,6 +33,8 @@ public class IO {
         // Our St. Louis addition. I didn't like the name of "Intake 2" so I called it the "Shit Take" because
         // no one can tell me otherwise
         motor_shittake          = Registrar.talon(ConfigMap.IO.Motor.shittake);
+        shittake_lower          = new Solenoid(ConfigMap.IO.Pneumatics.pcm_device_id, ConfigMap.IO.Pneumatics.shittake_lower_solenoid);
+        shittake_raise          = new Solenoid(ConfigMap.IO.Pneumatics.pcm_device_id, ConfigMap.IO.Pneumatics.shittake_raise_solenoid);
 
         if (IMU_SUPPORTED()) imu_mxp = new ADIS16448_IMU();
     }

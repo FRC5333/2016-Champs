@@ -12,29 +12,6 @@ public class Operator {
         joy_right   = new LogitechJoy(JoyMap.Operator.right);
     }
 
-    public static Command command(Runnable run) {
-        return new Command() {
-            @Override
-            protected void initialize() { }
-
-            @Override
-            protected void execute() {
-                run.run();
-            }
-
-            @Override
-            protected boolean isFinished() {
-                return true;
-            }
-
-            @Override
-            protected void end() { }
-
-            @Override
-            protected void interrupted() { }
-        };
-    }
-
     public static LogitechJoy getLeftJoystick() {
         return joy_left;
     }

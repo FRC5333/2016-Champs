@@ -16,6 +16,16 @@ public class ConfigMap {
                     intake          = 0,    // PWM - SR
                     shittake        = 1;    // PWM - SR
         }
+        public static class Pneumatics {
+            public static int
+                    pcm_device_id = 1,
+                    shittake_raise_solenoid = 0,
+                    shittake_lower_solenoid = 1;
+        }
+        public static class Power {
+            public static int
+                    pdp_device_id = 0;
+        }
     }
 
     public static class Motion {
