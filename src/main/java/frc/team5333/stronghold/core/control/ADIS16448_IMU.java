@@ -191,6 +191,14 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
         }
     }
 
+    public void calibrateNow() {
+        synchronized (this) {
+            m_gyro_center_x = m_gyro_x;
+            m_gyro_center_y = m_gyro_y;
+            m_gyro_center_z = m_gyro_z;
+        }
+    }
+
     private int readRegister(int reg) {
         ByteBuffer buf = ByteBuffer.allocateDirect(2);
         buf.order(ByteOrder.BIG_ENDIAN);

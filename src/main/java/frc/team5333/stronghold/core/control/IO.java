@@ -7,7 +7,9 @@ import frc.team5333.stronghold.core.configs.ConfigMap;
 import jaci.openrio.toast.core.Environment;
 import jaci.openrio.toast.lib.registry.Registrar;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class IO {
 
@@ -42,6 +44,10 @@ public class IO {
     public static double maybeIMU(Function<ADIS16448_IMU, Double> d) {
         if (IMU_SUPPORTED()) return d.apply(imu_mxp);
         return 0.0;
+    }
+
+    public static void maybeIMU(Consumer<ADIS16448_IMU> s) {
+        if (IMU_SUPPORTED()) s.accept(imu_mxp);
     }
 
     public static double imuAlignAngle() {
