@@ -5,6 +5,9 @@ import frc.team5333.stronghold.core.configs.ConfigMap
 import frc.team5333.stronghold.core.control.ControlLease
 import frc.team5333.stronghold.core.control.IO
 import frc.team5333.stronghold.core.vision.VisionNetwork
+import jaci.openrio.toast.core.StateTracker
+import jaci.openrio.toast.core.Toast
+import jaci.openrio.toast.lib.state.RobotState
 
 class ShootSystem {
     var LEASE = ControlLease(this)
@@ -44,9 +47,9 @@ class ShootSystem {
 
             if (!withinDeadzone(joy.y)) {
                 // Manual
-                top = joy.y
-                bottom = joy.y
-            } else if (!VisionNetwork.INSTANCE.activeFrame.isEmpty() && slider) {
+                top = -joy.y
+                bottom = -joy.y
+            } else if (!VisionNetwork.INSTANCE.activeFrame.isEmpty() && (slider || StateTracker.currentState == RobotState.AUTONOMOUS)) {
                 // Passive
                 top = ConfigMap.Control.Shoot.spinup_flywheel_throttle
                 bottom = ConfigMap.Control.Shoot.spinup_flywheel_throttle
@@ -55,7 +58,7 @@ class ShootSystem {
             if (!withinDeadzone(joy.x)) {
                 // Manual
                 intake = joy.x
-            } else if (!VisionNetwork.INSTANCE.activeFrame.isEmpty() && slider) {
+            } else if (!VisionNetwork.INSTANCE.activeFrame.isEmpty() && (slider || StateTracker.currentState == RobotState.AUTONOMOUS)) {
                 // Passive
                 intake = ConfigMap.Control.Shoot.intake_hold_throttle
             }

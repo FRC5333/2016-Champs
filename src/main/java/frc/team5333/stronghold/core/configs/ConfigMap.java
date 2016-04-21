@@ -53,7 +53,7 @@ public class ConfigMap {
 
             public static double
                         joystick_override_deadzone = 0.1,
-                        spinup_flywheel_throttle = 0.8;
+                        spinup_flywheel_throttle = 0.9;
         }
         public static class Align {
             public static double
