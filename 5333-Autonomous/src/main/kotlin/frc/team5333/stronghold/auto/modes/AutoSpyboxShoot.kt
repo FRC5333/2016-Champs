@@ -5,7 +5,6 @@ import frc.team5333.stronghold.core.strategy.StrategyShoot
 import frc.team5333.stronghold.core.strategy.StrategyVisionAlign
 
 class AutoSpyboxShoot : AutoMode {
-
     override fun getName(): String = "Spybox Shoot"
 
     override fun init() {}
@@ -16,5 +15,7 @@ class AutoSpyboxShoot : AutoMode {
 
         AutoMode.strategy(strat)
     }
+
+    override fun tick() {}
 
 }

@@ -15,4 +15,6 @@ public interface AutoMode {
 
     public void start();
 
+    public void tick();
+
 }
