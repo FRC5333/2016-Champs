@@ -9,7 +9,7 @@
 #define HALF_RING    PIXELS_RING / 2
 
 Adafruit_NeoPixel rings = Adafruit_NeoPixel(PIXELS_RING, PIN_RING, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS_STRIP, PIN_STRIP, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS_STRIP, PIN_STRIP, NEO_GRB + NEO_KHZ400);
 
 void setup() {
   rings.begin();
