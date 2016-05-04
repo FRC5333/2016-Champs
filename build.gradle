@@ -61,6 +61,11 @@ allprojects {
     gradlerio.deployFile = "toast/modules/${archivesBaseName}.jar"
 }
 
+dependencies {
+    compile group: 'jaci.openrio.cereal', name: 'Cereal', version: '0.1.1'
+    buildLibs group: 'jaci.openrio.cereal', name: 'Cereal', version: '0.1.1'
+}
+
 subprojects {
     // These link back to the root project to make sure everything depends on the root project.
     dependencies {

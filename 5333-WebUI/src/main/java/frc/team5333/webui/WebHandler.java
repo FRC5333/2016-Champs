@@ -8,6 +8,7 @@ import com.grack.nanojson.JsonWriter;
 import frc.team5333.stronghold.core.StrongholdCore;
 import frc.team5333.webui.api.API;
 import frc.team5333.webui.api.MatchAPI;
+import frc.team5333.webui.api.PlacementAPI;
 import frc.team5333.webui.controller.ConfigController;
 import frc.team5333.webui.controller.Controller;
 import frc.team5333.webui.controller.DashboardController;
@@ -104,7 +105,7 @@ public class WebHandler {
 //        register(new DriveAPI());
         register(new MatchAPI());
 //        register(new DefenseAPI());
-//        register(new PlacementAPI());
+        register(new PlacementAPI());
 //
         register(new IndexController());
         register(new ConfigController());

@@ -65,7 +65,13 @@ public class ConfigMap {
             public static String gyroAlignAxis = "Y";
             public static double
                         acceptable_error = 0.05,
-                        align_timeout = 2000;
+                        align_timeout = 2000,
+                        output_modifier = 1.0,
+                        rough_timeout = 1000;
+
+            public static double rough_speed = 0.7,
+                        rough_output_modifier = 1.0,
+                        rough_tolerance = 2.0;
         }
         public static class Motors {
             public static double

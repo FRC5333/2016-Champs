@@ -74,6 +74,7 @@ enum class VisionNetwork {
                     activeFrame = rects
                     activeFrame.frameID = id
                 }
+//                LED.sendLED(activeFrame)
             }
         } catch (e: Exception) {
             StrongholdCore.logger.error("Vision System Disconnected!")

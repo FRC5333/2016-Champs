@@ -1,8 +1,8 @@
 package frc.team5333.stronghold.auto;
 
 import frc.team5333.stronghold.auto.command.CommandListAuto;
+import frc.team5333.stronghold.auto.modes.AutoDefenseShoot;
 import frc.team5333.stronghold.auto.modes.AutoForward;
-import frc.team5333.stronghold.auto.modes.AutoForwardShoot;
 import frc.team5333.stronghold.auto.modes.AutoSpyboxShoot;
 import jaci.openrio.toast.core.command.CommandBus;
 import jaci.openrio.toast.lib.log.Logger;
@@ -63,7 +63,7 @@ public class Autonomous extends IterativeModule {
 
     public static void registerModes() {
         autoModes.put("forward", new AutoForward());
-        autoModes.put("forward_shoot", new AutoForwardShoot());
+        autoModes.put("forward_shoot", new AutoDefenseShoot());
         autoModes.put("spybox_shoot", new AutoSpyboxShoot());
     }
 

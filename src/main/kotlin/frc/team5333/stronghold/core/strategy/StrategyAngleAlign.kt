@@ -52,6 +52,8 @@ class StrategyAngleAlign(var angle: Double) : Strategy() {
         if (!started) start_time = System.currentTimeMillis()
         started = true
 
+        pidOutput = pidOutput * ConfigMap.Control.Align.output_modifier
+
         lease.use {
             it.drive(-pidOutput, pidOutput)
         }

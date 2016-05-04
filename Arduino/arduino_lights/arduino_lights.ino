@@ -1,7 +1,7 @@
 #include <Adafruit_NeoPixel.h>
 
 #define PIN_RING     11
-#define PIXELS_RING  32
+#define PIXELS_RING  16
 
 #define PIN_STRIP    6
 #define PIXELS_STRIP 150

@@ -56,23 +56,3 @@ class StrategyForward() : Strategy() {
         return elapsed > (speedupTime + runTime + slowdownTime)
     }
 }
-
-class AutoForwardShoot : AutoMode {
-
-    override fun getName(): String? = "Forward Shoot"
-
-    override fun init() {
-    }
-
-    override fun start() {
-        var strat = StrategyForward()
-        var vastrat = StrategyVisionAlign()
-        vastrat.then(StrategyShoot())
-        strat.then(vastrat)
-
-        AutoMode.strategy(strat)
-    }
-
-    override fun tick() {
-    }
-}

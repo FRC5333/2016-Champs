@@ -23,7 +23,7 @@ class StrategyShoot : Strategy() {
             it.setTop(ConfigMap.Control.Shoot.spinup_flywheel_throttle)
             it.setBottom(ConfigMap.Control.Shoot.spinup_flywheel_throttle)
 
-            if (elapsed > 500) {
+            if (elapsed > 2000) {
                 it.setIntake(ConfigMap.Control.Shoot.intake_fire_throttle)
             } else {
                 it.setIntake(ConfigMap.Control.Shoot.intake_hold_throttle)

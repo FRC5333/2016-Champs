@@ -33,11 +33,11 @@ class DriveSystem {
         var mode = Systems.control.driveMode()
 
         if (mode == ControlSystem.DriveMode.BOTH)
-            return Pair(sq(lJoy.y), sq(rJoy.y))
+            return Pair(sq(-rJoy.y), sq(-lJoy.y))
         else if (mode == ControlSystem.DriveMode.LEFT_ONLY)
-            return jaciDrive3(sq(lJoy.y), sq(lJoy.x), lJoy.twist, lJoy.bumper)
+            return jaciDrive3(sq(-lJoy.y), sq(lJoy.x), lJoy.twist, lJoy.bumper)
         else if (mode == ControlSystem.DriveMode.RIGHT_ONLY)
-            return jaciDrive3(sq(rJoy.y), sq(rJoy.x), rJoy.twist, rJoy.bumper)
+            return jaciDrive3(sq(-rJoy.y), sq(rJoy.x), rJoy.twist, rJoy.bumper)
         return Pair(0.0, 0.0)
     }
 
